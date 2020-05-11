@@ -5,6 +5,7 @@ import CovidTracker from './components/CovidTracker';
 import { BrowserRouter, Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import { MainPage } from './components/MainPage';
 import { Nav, NavItem, Navbar, Row, Col } from 'reactstrap';
+import CountryDetails from './components/CountryDetails';
 
 class App extends Component {
 
@@ -20,7 +21,7 @@ class App extends Component {
         <div>
           <BrowserRouter>
           <Row>
-            <Nav row style={{width: '100%'}}>
+            <Nav style={{width: '100%'}}>
               <Col>
               <NavItem>
                 <NavLink className="nav-link" to="/home">Home</NavLink>
@@ -34,8 +35,9 @@ class App extends Component {
             </Nav>
           </Row>
           <Switch>
-            <Route path='/home' component={MainPage}/>
-            <Route path='/covidTracker' component={CovidTracker}/>
+            <Route exact path='/home' component={MainPage}/>
+            <Route exact path='/covidTracker' component={CovidTracker}/>
+            <Route path='/covidTracker/:countryCode' component={({match}) => <CountryDetails countryCode={match.params.countryCode}/>}/>
             <Redirect to='/home'/>
           </Switch>
           </BrowserRouter>

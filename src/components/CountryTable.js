@@ -12,7 +12,9 @@ export const CountryTable = (props) => {
                     {c.CountryCode}
                 </td>
                 <td>
-                    {c.Country}
+                    <Link to={`/covidTracker/${c.Country}`} >
+                        {c.Country}
+                    </Link>
                 </td>
                 <td>
                     {c.TotalConfirmed}
