@@ -15,9 +15,11 @@ class CovidTracker extends Component {
             worldData: [],
             countryData: [],
             filtered: [],
+            filterCode: 'All',
         }
         this.getCountry = this.getCountry.bind(this);
         this.handleOnChange = this.handleOnChange.bind(this);
+        this.filterCountryCode = this.filterCountryCode.bind(this);
     }
     componentDidMount() {
         fetch("https://api.covid19api.com/summary")
@@ -54,6 +56,12 @@ class CovidTracker extends Component {
         })
     }
 
+    filterCountryCode = (e) => {
+        this.setState({
+            filterCode: e.target.value,
+        })
+    }
+
     render() {
         return (
                     <div>
@@ -65,7 +73,7 @@ class CovidTracker extends Component {
                         <WorldData worldData={this.state.worldData}/>
                         <img src={image} height="200px" alt="covid 19"/>
                         <Row>
-                            <Col sm={12}>
+                            <Col>
                                 <Form inline onSubmit={this.getCountry} >
                                     <FormGroup>
                                         <Input type="text" name="search" id="searchbar" placeholder="Enter country name" value={this.state.search} onChange={this.handleOnChange}/>
@@ -73,9 +81,19 @@ class CovidTracker extends Component {
                                     <Button>Search</Button>
                                 </Form>
                             </Col>
+                            <Col >
+                            <FormGroup>
+                                <Input type="select" name="countryCode" id="countryCode" onChange={this.filterCountryCode}>
+                                <option value='All'>All</option>
+                                <option value='A'>A</option>
+                                <option value='B'>B</option>
+                                <option value='C'>C</option>
+                                </Input>
+                            </FormGroup>
+                            </Col>
                         </Row>
                         <h2>Covid cases by countries</h2>
-                        <CountryTable countries={this.state.countryData} filtered={this.state.filtered}/>
+                        <CountryTable countries={this.state.countryData} filtered={this.state.filtered} countryCode={this.state.filterCode}/>
                         </div>
                     )}
 

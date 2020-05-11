@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 
 export const CountryTable = (props) => {
     const countries = props.filtered.length === 0 ? props.countries : props.filtered;
-    const renderCountries = countries.map((c) => (
+    const countries2 = props.countryCode === 'All' ? countries : countries.filter(country => country.CountryCode.includes(props.countryCode));
+    const renderCountries = countries2.map((c) => (
             <tr key={c.CountryCode}>
                 <td>
                     {c.CountryCode}
