@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import CovidTracker from './components/CovidTracker';
+import CovidTracker from './components/CovidTracker/CovidTracker';
 import { BrowserRouter, Switch, Route, Redirect, NavLink } from 'react-router-dom';
-import { MainPage } from './components/MainPage';
+import { MainPage } from './components/MainPage/MainPage';
 import { Nav, NavItem, Navbar, Row, Col } from 'reactstrap';
-import CountryDetails from './components/CountryDetails';
+import CountryDetails from './components/CountryDetails/CountryDetails';
 
 class App extends Component {
 
@@ -37,7 +37,7 @@ class App extends Component {
           <Switch>
             <Route exact path='/home' component={MainPage}/>
             <Route exact path='/covidTracker' component={CovidTracker}/>
-            <Route path='/covidTracker/:countryCode' component={({match}) => <CountryDetails countryCode={match.params.countryCode}/>}/>
+            <Route path='/covidTracker/:slug' component={({match}) => <CountryDetails countrySlug={match.params.slug}/>}/>
             <Redirect to='/home'/>
           </Switch>
           </BrowserRouter>

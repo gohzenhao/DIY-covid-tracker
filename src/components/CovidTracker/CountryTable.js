@@ -6,13 +6,14 @@ import { Link } from 'react-router-dom';
 export const CountryTable = (props) => {
     const countries = props.filtered.length === 0 ? props.countries : props.filtered;
     const countries2 = props.countryCode === 'All' ? countries : countries.filter(country => country.CountryCode.includes(props.countryCode));
-    const renderCountries = countries2.map((c) => (
+    const countries3 = countries2.sort((a, b) => a.TotalConfirmed > b.TotalConfirmed ? -1 : 1);
+    const renderCountries = countries3.map((c) => (
             <tr key={c.CountryCode}>
                 <td>
                     {c.CountryCode}
                 </td>
                 <td>
-                    <Link to={`/covidTracker/${c.Country}`} >
+                    <Link to={`/covidTracker/${c.Slug}`} >
                         {c.Country}
                     </Link>
                 </td>
