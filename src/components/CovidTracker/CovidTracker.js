@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import image from './covid19.png';
-import { CountryTable } from './CountryTable';
-import { WorldData } from './WorldData';
-import { Row, Col, Form, FormGroup, Input, Button } from 'reactstrap';
+import { CountryTable } from './components/CountryTable';
+import { WorldData } from './components/WorldData';
+import { Row, Col, Form, FormGroup, Input, Button, Spinner, InputGroup, InputGroupAddon } from 'reactstrap';
+import './covidtracker.css';
 
 class CovidTracker extends Component {
 
@@ -66,22 +66,25 @@ class CovidTracker extends Component {
         return (
                     <div>
                     {this.state.isLoading ? (
-                        <h4>Loading....</h4>
+                            <div className="App-header">
+                            <h4>Loading...</h4>
+                            <Spinner animation="grow" variant="info"/>
+                            </div>
                     ) : (
                         <div>
-                        <h1>The world as of now</h1>
                         <WorldData worldData={this.state.worldData}/>
-                        <img src={image} height="200px" alt="covid 19"/>
-                        <Row>
+                        <Row className="mt-3 ml-5 mr-5">
                             <Col>
-                                <Form inline onSubmit={this.getCountry} >
+                                <Form flex-row-reverse onSubmit={this.getCountry} >
                                     <FormGroup>
+                                        <InputGroup>
                                         <Input type="text" name="search" id="searchbar" placeholder="Enter country name" value={this.state.search} onChange={this.handleOnChange}/>
+                                        <InputGroupAddon addonType="append"><Button>Search</Button></InputGroupAddon>
+                                        </InputGroup>
                                     </FormGroup>
-                                    <Button>Search</Button>
                                 </Form>
                             </Col>
-                            <Col >
+                            <Col>
                             <FormGroup>
                                 <Input type="select" name="countryCode" id="countryCode" onChange={this.filterCountryCode}>
                                 <option value='All'>All</option>
@@ -92,8 +95,12 @@ class CovidTracker extends Component {
                             </FormGroup>
                             </Col>
                         </Row>
-                        <h2>Covid cases by countries</h2>
-                        <CountryTable countries={this.state.countryData} filtered={this.state.filtered} countryCode={this.state.filterCode}/>
+                        <h2 className="mb-3">Covid cases by countries</h2>
+                        <Row>
+                            <Col>
+                                <CountryTable countries={this.state.countryData} filtered={this.state.filtered} countryCode={this.state.filterCode}/>
+                            </Col>
+                        </Row>
                         </div>
                     )}
 

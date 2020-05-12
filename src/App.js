@@ -13,14 +13,13 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className="App bg-dark">
+        {/* <header className="App-header">
           <h1>Covid tracking app</h1>
           <h2>By yours truly: Jeffrey Goh</h2>
-        </header>
-        <div>
+        </header> */}
           <BrowserRouter>
-          <Row>
+          {/* <Row>
             <Nav style={{width: '100%'}}>
               <Col>
               <NavItem>
@@ -33,15 +32,14 @@ class App extends Component {
               </NavItem>
               </Col>
             </Nav>
-          </Row>
+          </Row> */}
           <Switch>
-            <Route exact path='/home' component={MainPage}/>
+            {/* <Route exact path='/home' component={MainPage}/> */}
             <Route exact path='/covidTracker' component={CovidTracker}/>
             <Route path='/covidTracker/:slug' component={({match}) => <CountryDetails countrySlug={match.params.slug}/>}/>
-            <Redirect to='/home'/>
+            <Redirect to='/covidTracker'/>
           </Switch>
           </BrowserRouter>
-        </div>
       </div>
     );
   }
