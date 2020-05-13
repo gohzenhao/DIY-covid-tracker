@@ -75,7 +75,7 @@ class CovidTracker extends Component {
                         <WorldData worldData={this.state.worldData}/>
                         <Row className="mt-3 ml-5 mr-5">
                             <Col>
-                                <Form flex-row-reverse onSubmit={this.getCountry} >
+                                <Form onSubmit={this.getCountry} >
                                     <FormGroup>
                                         <InputGroup>
                                         <Input type="text" name="search" id="searchbar" placeholder="Enter country name" value={this.state.search} onChange={this.handleOnChange}/>
