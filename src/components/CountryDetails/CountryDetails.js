@@ -3,6 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { CountryDailyStats } from './components/CountryDailyStats';
 import { SpecificCountryTable } from './components/SpecificCountryTable';
 import DatePicker from 'react-date-picker';
+import { CountryWeeklyChart } from './components/CountryWeeklyChart';
 
 
 class CountryDetails extends Component {
@@ -15,6 +16,7 @@ class CountryDetails extends Component {
             isLoading: true,
             name: '',
             date: null,
+            summary: [],
         }
 
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -42,7 +44,15 @@ class CountryDetails extends Component {
                 name: data[0].Country,
             })
         })
-        .catch(console.log)
+        .catch(console.log);
+
+        console.log(this.props.match);
+
+        const filtered = this.props.countryData.filter((c) => c.Slug === this.props.countrySlug);
+        this.setState({
+            summary: filtered[0],
+        })
+
     }
 
     handleDateChange = (e) => {
@@ -61,8 +71,12 @@ class CountryDetails extends Component {
                     <div>
                     <h1>Cases in <span>{this.state.name}</span></h1>
                     <h2>Statistics as of {time.toDateString()}</h2>
-                    <CountryDailyStats country={this.state.country[this.state.country.length - 1]}/>
-                    <DatePicker onChange={this.handleDateChange} value={this.state.date}/>
+                    <CountryDailyStats match={this.props.match} country={this.state.summary} details={this.state.country}/>
+                    <CountryWeeklyChart country={this.state.country} date={this.state.date}/>
+                    <Row className="m-3 justify-content-center">
+                        <h4>Display data from: </h4>
+                        <DatePicker onChange={this.handleDateChange} value={this.state.date}/>
+                    </Row>
                     <SpecificCountryTable details={this.state.country} date={this.state.date}/>
                      </div>
                 )}

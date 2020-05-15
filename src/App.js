@@ -4,42 +4,54 @@ import './App.css';
 import CovidTracker from './components/CovidTracker/CovidTracker';
 import { BrowserRouter, Switch, Route, Redirect, NavLink } from 'react-router-dom';
 import { MainPage } from './components/MainPage/MainPage';
-import { Nav, NavItem, Navbar, Row, Col } from 'reactstrap';
+import { Spinner } from 'reactstrap';
 import CountryDetails from './components/CountryDetails/CountryDetails';
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+        isLoading: true,
+        worldData: [],
+        countryData: [],
+    }
+  }
+  componentDidMount() {
+    fetch("https://api.covid19api.com/summary")
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        this.setState({
+            worldData: data.Global,
+            countryData: data.Countries,
+            isLoading: false,
+        })
+    })
+    .catch(console.log);
+    console.log("hi");
+}
 
   render() {
-
     return (
       <div className="App bg-dark">
-        {/* <header className="App-header">
-          <h1>Covid tracking app</h1>
-          <h2>By yours truly: Jeffrey Goh</h2>
-        </header> */}
-          <BrowserRouter>
-          {/* <Row>
-            <Nav style={{width: '100%'}}>
-              <Col>
-              <NavItem>
-                <NavLink className="nav-link" to="/home">Home</NavLink>
-              </NavItem>
-              </Col>
-              <Col>
-              <NavItem>
-                <NavLink className="nav-link" to="/covidTracker">Covid Tracker</NavLink>
-              </NavItem>
-              </Col>
-            </Nav>
-          </Row> */}
-          <Switch>
-            {/* <Route exact path='/home' component={MainPage}/> */}
-            <Route exact path='/covidTracker' component={CovidTracker}/>
-            <Route path='/covidTracker/:slug' component={({match}) => <CountryDetails countrySlug={match.params.slug}/>}/>
-            <Redirect to='/covidTracker'/>
-          </Switch>
-          </BrowserRouter>
+          {this.state.isLoading ? (
+            <div className="App-header">
+            <Spinner/>
+            <h4>Loading...</h4>
+            </div>
+          ) : (
+            <div>
+                <BrowserRouter>
+                <Switch>
+                  <Route exact path='/covidTracker' component={() => <CovidTracker countryData={this.state.countryData} worldData={this.state.worldData}/>}/>
+                  <Route path='/covidTracker/:slug' component={({match}) => <CountryDetails match={match} countrySlug={match.params.slug} countryData={this.state.countryData}/>}/>
+                  <Redirect to='/covidTracker'/>
+                </Switch>
+                </BrowserRouter>
+            </div>
+          )}
       </div>
     );
   }

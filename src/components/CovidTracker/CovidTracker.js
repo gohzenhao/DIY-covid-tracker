@@ -10,10 +10,7 @@ class CovidTracker extends Component {
         super(props);
 
         this.state = {
-            isLoading: true,
             search: '',
-            worldData: [],
-            countryData: [],
             filtered: [],
             filterCode: 'All',
         }
@@ -21,20 +18,20 @@ class CovidTracker extends Component {
         this.handleOnChange = this.handleOnChange.bind(this);
         this.filterCountryCode = this.filterCountryCode.bind(this);
     }
-    componentDidMount() {
-        fetch("https://api.covid19api.com/summary")
-        .then(response => response.json())
-        .then(data => {
-            console.log(data)
-            this.setState({
-                worldData: data.Global,
-                countryData: data.Countries,
-                isLoading: false,
-            })
-        })
-        .catch(console.log);
-        console.log(this.state);
-    }
+    // componentDidMount() {
+    //     fetch("https://api.covid19api.com/summary")
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log(data)
+    //         this.setState({
+    //             worldData: data.Global,
+    //             countryData: data.Countries,
+    //             isLoading: false,
+    //         })
+    //     })
+    //     .catch(console.log);
+    //     console.log(this.state);
+    // }
 
     getCountry = (e) => {
         e.preventDefault();
@@ -45,7 +42,7 @@ class CovidTracker extends Component {
             })
         } else {
             this.setState({
-                filtered: this.state.countryData.filter( country => country.Country.includes(this.state.search)),
+                filtered: this.props.countryData.filter( country => country.Country.includes(this.state.search)),
             })
     }
 }
@@ -64,48 +61,39 @@ class CovidTracker extends Component {
 
     render() {
         return (
-                    <div>
-                    {this.state.isLoading ? (
-                            <div className="App-header">
-                            <h4>Loading...</h4>
-                            <Spinner animation="grow" variant="info"/>
-                            </div>
-                    ) : (
-                        <div>
-                        <WorldData worldData={this.state.worldData}/>
-                        <Row className="mt-3 ml-5 mr-5">
-                            <Col>
-                                <Form onSubmit={this.getCountry} >
-                                    <FormGroup>
-                                        <InputGroup>
-                                        <Input type="text" name="search" id="searchbar" placeholder="Enter country name" value={this.state.search} onChange={this.handleOnChange}/>
-                                        <InputGroupAddon addonType="append"><Button>Search</Button></InputGroupAddon>
-                                        </InputGroup>
-                                    </FormGroup>
-                                </Form>
-                            </Col>
-                            <Col>
-                            <FormGroup>
-                                <Input type="select" name="countryCode" id="countryCode" onChange={this.filterCountryCode}>
-                                <option value='All'>All</option>
-                                <option value='A'>A</option>
-                                <option value='B'>B</option>
-                                <option value='C'>C</option>
-                                </Input>
-                            </FormGroup>
-                            </Col>
-                        </Row>
-                        <h2 className="mb-3">Covid cases by countries</h2>
-                        <Row>
-                            <Col>
-                                <CountryTable countries={this.state.countryData} filtered={this.state.filtered} countryCode={this.state.filterCode}/>
-                            </Col>
-                        </Row>
-                        </div>
-                    )}
-
-                    </div>
-                )}
+                <div>
+                    <WorldData worldData={this.props.worldData}/>
+                    <Row className="mt-3 ml-5 mr-5">
+                        <Col>
+                            <Form onSubmit={this.getCountry} >
+                                <FormGroup>
+                                    <InputGroup>
+                                    <Input type="text" name="search" id="searchbar" placeholder="Enter country name" value={this.state.search} onChange={this.handleOnChange}/>
+                                    <InputGroupAddon addonType="append"><Button>Search</Button></InputGroupAddon>
+                                    </InputGroup>
+                                </FormGroup>
+                            </Form>
+                        </Col>
+                        <Col>
+                        <FormGroup>
+                            <Input type="select" name="countryCode" id="countryCode" onChange={this.filterCountryCode}>
+                            <option value='All'>All</option>
+                            <option value='A'>A</option>
+                            <option value='B'>B</option>
+                            <option value='C'>C</option>
+                            </Input>
+                        </FormGroup>
+                        </Col>
+                    </Row>
+                    <h2 className="mb-3">Covid cases by countries</h2>
+                    <Row>
+                        <Col>
+                            <CountryTable countries={this.props.countryData} filtered={this.state.filtered} countryCode={this.state.filterCode}/>
+                        </Col>
+                    </Row>
+                </div>
+            );
+        }
 
 };
 
