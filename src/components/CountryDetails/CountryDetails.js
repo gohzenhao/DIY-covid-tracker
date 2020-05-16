@@ -5,7 +5,6 @@ import { SpecificCountryTable } from './components/SpecificCountryTable';
 import DatePicker from 'react-date-picker';
 import { CountryWeeklyChart } from './components/CountryWeeklyChart';
 
-
 class CountryDetails extends Component {
 
     constructor(props) {

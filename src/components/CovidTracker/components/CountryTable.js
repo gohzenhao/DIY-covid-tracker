@@ -1,6 +1,8 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { DisplayNumber } from '../../DisplayNumber/DisplayNumber';
+
 
 
 export const CountryTable = (props) => {
@@ -8,23 +10,23 @@ export const CountryTable = (props) => {
     const countries2 = props.countryCode === 'All' ? countries : countries.filter(country => country.CountryCode.includes(props.countryCode));
     const countries3 = countries2.sort((a, b) => a.TotalConfirmed > b.TotalConfirmed ? -1 : 1);
     const renderCountries = countries3.map((c) => (
-            <tr key={c.CountryCode}>
+            <tr key={c.CountryCode} className="table-row">
                 <td>
                     {c.CountryCode}
                 </td>
                 <td>
-                    <Link to={`/covidTracker/${c.Slug}`} >
+                <Link to={`/covidTracker/${c.Slug}`} >
                         {c.Country}
-                    </Link>
+                </Link>
                 </td>
                 <td>
-                    {c.TotalConfirmed}
+                    <DisplayNumber number={c.TotalConfirmed}/>
                 </td>
                 <td>
-                    {c.TotalDeaths}
+                <DisplayNumber number={c.TotalDeaths}/>
                 </td>
                 <td>
-                    {c.TotalRecovered}
+                <DisplayNumber number={c.TotalRecovered}/>
                 </td>
             </tr>
         ));

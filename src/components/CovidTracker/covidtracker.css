@@ -2,3 +2,8 @@
     background-image: url("./assets/cityscape.jpg");
     background-position: center;
 }
+
+.table-row:hover {
+    cursor: pointer;
+    background-color: orange;
+}

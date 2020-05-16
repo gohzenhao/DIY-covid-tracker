@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Card, CardBody, CardSubtitle, CardTitle, CardText, Button, Badge, CardHeader } from 'reactstrap';
 import { NavLink, Route} from 'react-router-dom';
 import { LearnMoreChart } from './LearnMoreChart';
+import { DisplayNumber } from '../../DisplayNumber/DisplayNumber';
 
 export const CountryDailyStats = ({match, country, details}) => {
 
@@ -11,7 +12,7 @@ export const CountryDailyStats = ({match, country, details}) => {
         <Col>
             <Card className="bg-dark text-white">
                 <CardBody>
-                    <CardTitle><h1 className="display-1 font-weight-bold">{country.TotalConfirmed}<span className="lead font-weight-bold">cases</span></h1></CardTitle>
+                    <CardTitle><h1 className="display-1 font-weight-bold"><DisplayNumber number={country.TotalConfirmed}/><span className="lead font-weight-bold">cases</span></h1></CardTitle>
                     <CardSubtitle><h4><Badge color="warning text-white">Confirmed</Badge></h4></CardSubtitle>
                     <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                     <NavLink to={`${match.url}/confirmed`}><Button color="info">Learn more</Button></NavLink>
@@ -21,7 +22,7 @@ export const CountryDailyStats = ({match, country, details}) => {
         <Col>
             <Card className="bg-dark text-white">
                 <CardBody>
-                    <CardTitle><h1 className="display-1 font-weight-bold">{country.TotalRecovered}<span className="lead font-weight-bold">cases</span></h1></CardTitle>
+                    <CardTitle><h1 className="display-1 font-weight-bold"><DisplayNumber number={country.TotalRecovered}/><span className="lead font-weight-bold">cases</span></h1></CardTitle>
                     <CardSubtitle><h4><Badge color="success text-white">Recovered</Badge></h4></CardSubtitle>
                     <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                     <NavLink to={`${match.url}/recovered`}><Button color="info">Learn more</Button></NavLink>
@@ -31,7 +32,7 @@ export const CountryDailyStats = ({match, country, details}) => {
         <Col>
             <Card className="bg-dark text-white">
                 <CardBody>
-                    <CardTitle><h1 className="display-1 font-weight-bold">{country.TotalDeaths}<span className="lead font-weight-bold">cases</span></h1></CardTitle>
+                    <CardTitle><h1 className="display-1 font-weight-bold"><DisplayNumber number={country.TotalDeaths}/><span className="lead font-weight-bold">cases</span></h1></CardTitle>
                     <CardSubtitle><h4><Badge color="danger text-white">Deaths</Badge></h4></CardSubtitle>
                     <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
                     <NavLink to={`${match.url}/deaths`}><Button color="info">Learn more</Button></NavLink>
